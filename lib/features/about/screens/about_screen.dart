@@ -68,7 +68,7 @@ class AboutScreen extends StatelessWidget {
               _buildTimelineItem(
                 title: 'Lab Instructor (Systems & Infrastructure)',
                 company: 'Rajalakshmi Institute of Technology',
-                period: 'Oct 2023 - Present',
+                period: 'Oct 2025 - Present',
                 description: 'Managing lab systems, automating operations (shutdown scheduling, remote management), and providing technical support for hardware and networking across multiple platforms. Created the Mac Lab Admin Controller toolkit using Fish shell and SSH.',
               ),
               const SizedBox(height: 24),

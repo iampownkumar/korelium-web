@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../shared/widgets/responsive_layout.dart';
+import '../data/projects_data.dart';
+import '../models/project_model.dart';
 
 class PortfolioScreen extends StatelessWidget {
   const PortfolioScreen({super.key});
@@ -33,20 +36,7 @@ class PortfolioScreen extends StatelessWidget {
               Wrap(
                 spacing: 24,
                 runSpacing: 24,
-                children: [
-                  _buildProjectCard(
-                    title: 'Korelium Platform',
-                    description: 'A cutting-edge platform where fantasy meets reality. Built with advanced web technologies to deliver highly scalable features.',
-                    tag: 'Architecture / Fullstack',
-                    context: context,
-                  ),
-                  _buildProjectCard(
-                    title: 'Donghua Canvas Engine',
-                    description: 'Experimenting with Flutter CustomPainters to create silky 60FPS fluid particle systems for the web.',
-                    tag: 'Flutter / UI / Graphics',
-                    context: context,
-                  ),
-                ],
+                children: portfolioProjects.map((project) => _buildProjectCard(project: project, context: context)).toList(),
               ),
             ],
           ),
@@ -55,7 +45,7 @@ class PortfolioScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildProjectCard({required String title, required String description, required String tag, required BuildContext context}) {
+  Widget _buildProjectCard({required ProjectModel project, required BuildContext context}) {
     final double width = ResponsiveLayout.isMobile(context) 
         ? double.infinity 
         : (ResponsiveLayout.isDesktop(context) ? 450 : 320);
@@ -66,27 +56,48 @@ class PortfolioScreen extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.surface.withOpacity(0.5),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.textSecondary.withOpacity(0.2)),
-        // Subtle hover effects would be added in a stateful wrapping here.
+        border: Border.all(
+          color: project.isFeatured 
+              ? AppColors.jade.withOpacity(0.5) 
+              : AppColors.textSecondary.withOpacity(0.2)
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-            decoration: BoxDecoration(
-              color: AppColors.cyan.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: AppColors.cyan.withOpacity(0.5)),
-            ),
-            child: Text(tag, style: const TextStyle(fontSize: 12, color: AppColors.cyan, fontWeight: FontWeight.bold)),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                decoration: BoxDecoration(
+                  color: AppColors.cyan.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: AppColors.cyan.withOpacity(0.5)),
+                ),
+                child: Text(project.tag, style: const TextStyle(fontSize: 12, color: AppColors.cyan, fontWeight: FontWeight.bold)),
+              ),
+              if (project.githubUrl != null)
+                IconButton(
+                  icon: const Icon(Icons.code, color: AppColors.textSecondary),
+                  tooltip: 'View Source Code',
+                  onPressed: () => _launchURL(project.githubUrl!),
+                )
+            ],
           ),
           const SizedBox(height: 16),
-          Text(title, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: AppColors.textPrimary)),
+          Text(project.title, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: AppColors.textPrimary)),
           const SizedBox(height: 12),
-          Text(description, style: const TextStyle(fontSize: 16, color: AppColors.textSecondary, height: 1.5)),
+          Text(project.description, style: const TextStyle(fontSize: 16, color: AppColors.textSecondary, height: 1.5)),
         ],
       ),
     );
+  }
+
+  void _launchURL(String url) async {
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    }
   }
 }
