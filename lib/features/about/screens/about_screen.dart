@@ -73,6 +73,13 @@ class AboutScreen extends StatelessWidget {
               ),
               const SizedBox(height: 24),
               _buildTimelineItem(
+                title: 'Delhivery Agent',
+                company: 'Delhivery',
+                period: 'Mar 2024 - Aug 2024',
+                description: 'Ensured precise and timely logistics operations and deliveries within assigned sectors.',
+              ),
+              const SizedBox(height: 24),
+              _buildTimelineItem(
                 title: 'AML Transaction Monitoring Specialist',
                 company: 'FIS',
                 period: 'May 2019 - Aug 2022',
