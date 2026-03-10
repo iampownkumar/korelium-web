@@ -34,24 +34,56 @@ class AboutScreen extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               const Text(
-                "A Senior Engineer with a passion for building elegant, scalable, and immersive digital experiences. Currently, I am pouring my heart into building Korelium—a place where fantasy meets reality. Korelium is more than just a project; it is a philosophy of blending highly technical, performant architectures with visually stunning aesthetics.",
+                "A specialist in Linux-based systems, automation, and multi-platform environments. My background includes robust system administration, automation scripting, and lab infrastructure management. \n\nI am currently focusing on DevOps and Infrastructure Engineering, with a deep interest in system internals, networking, and cloud technologies. While I actively build and research, Korelium remains my central avenue for blending high-performance architectures with visually stunning web aesthetics.",
                 style: TextStyle(fontSize: 18, color: AppColors.textPrimary, height: 1.6),
               ),
               const SizedBox(height: 48),
 
+              Text(
+                "Education",
+                style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                      fontSize: 32,
+                      color: AppColors.jade,
+                    ),
+              ),
+              const SizedBox(height: 16),
+              _buildTimelineItem(
+                title: 'Bachelor of Computer Applications (BCA)',
+                company: "Pachaiyappa's College, Chennai",
+                period: '2017 - 2020',
+                description: 'Foundational studies in computer science, software engineering, and applications.',
+              ),
+              const SizedBox(height: 48),
+
+              Text(
+                "Experience",
+                style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                      fontSize: 32,
+                      color: AppColors.cyan,
+                    ),
+              ),
+              const SizedBox(height: 16),
+
               // Experience Section
               _buildTimelineItem(
-                title: 'Founder & Lead Engineer',
-                company: 'Korelium',
-                period: 'Present',
-                description: 'Pioneering new platform architectures, feature services, and rich web interfaces using Flutter, NextJS, and robust backend systems.',
+                title: 'Lab Instructor (Systems & Infrastructure)',
+                company: 'Rajalakshmi Institute of Technology',
+                period: 'Oct 2023 - Present',
+                description: 'Managing lab systems, automating operations (shutdown scheduling, remote management), and providing technical support for hardware and networking across multiple platforms. Created the Mac Lab Admin Controller toolkit using Fish shell and SSH.',
               ),
               const SizedBox(height: 24),
               _buildTimelineItem(
-                title: 'Senior Software Engineer',
-                company: 'Various',
-                period: 'Past',
-                description: 'Scaled applications, optimized performant data architectures, and led teams to deliver high-quality software solutions.',
+                title: 'AML Transaction Monitoring Specialist',
+                company: 'FIS',
+                period: 'May 2019 - Aug 2022',
+                description: 'Analyzed alerts for suspicious financial activity, conducted risk investigations using tools like LexisNexis, and prepared Suspicious Activity Reports (SAR).',
+              ),
+              const SizedBox(height: 24),
+              _buildTimelineItem(
+                title: 'Customer Support Specialist',
+                company: 'Fast Track Call Taxi',
+                period: 'Aug 2018 - Apr 2019',
+                description: 'Provided frontline support and resolved customer inquiries efficiently.',
               ),
             ],
           ),
