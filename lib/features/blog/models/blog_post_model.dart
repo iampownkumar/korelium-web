@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:convert';
 
 class BlogPostModel {
   final String id;
@@ -15,14 +15,31 @@ class BlogPostModel {
     required this.createdAt,
   });
 
-  factory BlogPostModel.fromFirestore(DocumentSnapshot doc) {
-    Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+  factory BlogPostModel.fromJson(Map<String, dynamic> data) {
+    String body = data['body'] ?? '';
+    String summaryStr = _extractSummary(body);
+
     return BlogPostModel(
-      id: doc.id,
+      id: data['id'].toString(),
       title: data['title'] ?? 'Untitled',
-      summary: data['summary'] ?? '',
-      content: data['content'] ?? '',
-      createdAt: (data['createdAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
+      summary: summaryStr,
+      content: body,
+      createdAt: data['created_at'] != null 
+          ? DateTime.parse(data['created_at']) 
+          : DateTime.now(),
     );
+  }
+
+  static String _extractSummary(String markdownText) {
+    // A simple parser to extract the first paragraph as a summary
+    final lines = markdownText.split('\n');
+    for (var line in lines) {
+      final trimmed = line.trim();
+      // Skip headers and empty lines
+      if (trimmed.isNotEmpty && !trimmed.startsWith('#') && !trimmed.startsWith('!')) {
+        return trimmed.length > 150 ? '${trimmed.substring(0, 147)}...' : trimmed;
+      }
+    }
+    return '';
   }
 }

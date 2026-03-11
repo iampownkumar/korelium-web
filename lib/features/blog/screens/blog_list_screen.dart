@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../shared/widgets/responsive_layout.dart';
@@ -56,8 +57,8 @@ class _BlogListScreenState extends State<BlogListScreen> {
               ),
               const SizedBox(height: 48),
               
-              StreamBuilder<List<BlogPostModel>>(
-                stream: BlogService.getBlogPosts(),
+              FutureBuilder<List<BlogPostModel>>(
+                future: BlogService.getBlogPosts(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
@@ -175,13 +176,27 @@ class _BlogListScreenState extends State<BlogListScreen> {
               ),
               const SizedBox(height: 48),
               MarkdownBody(
-                data: post.content.replaceAll(r'\n', '\n').replaceAll(r'\\n', '\n'),
+                data: post.content,
+                selectable: true,
+                builders: {
+                  'code': CustomCodeBlockBuilder(context),
+                },
                 styleSheet: MarkdownStyleSheet(
                   h1: const TextStyle(color: AppColors.textPrimary, fontSize: 36, fontWeight: FontWeight.bold),
                   h2: const TextStyle(color: AppColors.cyan, fontSize: 24, fontWeight: FontWeight.bold),
                   h3: const TextStyle(color: AppColors.jade, fontSize: 20, fontWeight: FontWeight.bold),
                   p: const TextStyle(color: AppColors.textSecondary, fontSize: 18, height: 1.6),
                   listBullet: const TextStyle(color: AppColors.jade),
+                  codeblockDecoration: BoxDecoration(
+                    color: AppColors.surface,
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: AppColors.cyan.withOpacity(0.3)),
+                  ),
+                  code: const TextStyle(
+                    fontFamily: 'monospace',
+                    fontSize: 14,
+                    color: AppColors.textPrimary,
+                  ),
                   blockquoteDecoration: BoxDecoration(
                     border: const Border(left: BorderSide(color: AppColors.cyan, width: 4)),
                     color: AppColors.surface.withOpacity(0.5),
@@ -191,6 +206,83 @@ class _BlogListScreenState extends State<BlogListScreen> {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class CustomCodeBlockBuilder extends MarkdownElementBuilder {
+  final BuildContext context;
+  CustomCodeBlockBuilder(this.context);
+
+  @override
+  Widget? visitElementAfter(var element, TextStyle? preferredStyle) {
+    if (element.textContent.isEmpty) return null;
+
+    final String text = element.textContent;
+    // Check if this is a block of code (usually has newlines) or inline code
+    if (!text.contains('\n')) {
+      // Inline code
+      return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+        decoration: BoxDecoration(
+          color: AppColors.surface.withOpacity(0.8),
+          borderRadius: BorderRadius.circular(4),
+        ),
+        child: Text(text, style: preferredStyle?.copyWith(color: AppColors.jade)),
+      );
+    }
+
+    // Code block
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      decoration: BoxDecoration(
+        color: AppColors.background,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: AppColors.cyan.withOpacity(0.3)),
+      ),
+      child: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: SelectableText(
+              text,
+              style: const TextStyle(
+                fontFamily: 'monospace',
+                fontSize: 14,
+                color: AppColors.textPrimary,
+                height: 1.5,
+              ),
+            ),
+          ),
+          Positioned(
+            top: 4,
+            right: 4,
+            child: Tooltip(
+              message: 'Copy to clipboard',
+              child: IconButton(
+                icon: const Icon(Icons.copy_rounded, size: 20, color: AppColors.cyan),
+                splashRadius: 20,
+                onPressed: () {
+                  Clipboard.setData(ClipboardData(text: text));
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: const Text('Terminal command copied to clipboard!', style: TextStyle(color: AppColors.textPrimary)),
+                      backgroundColor: AppColors.surface,
+                      behavior: SnackBarBehavior.floating,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        side: const BorderSide(color: AppColors.cyan, width: 1),
+                      ),
+                      duration: const Duration(seconds: 2),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
