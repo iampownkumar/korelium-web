@@ -77,18 +77,21 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     ),
                   ),
                   const SizedBox(height: 16),
-                  Text(
-                    "Where Fantasy\nMeets Reality.",
-                    style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                          fontSize: ResponsiveLayout.isMobile(context) ? 48 : 72,
-                          height: 1.1,
-                          shadows: [
-                            Shadow(
-                              color: AppColors.cyan.withOpacity(0.3),
-                              blurRadius: 20,
-                            ),
-                          ],
-                        ),
+                  ShaderMask(
+                    blendMode: BlendMode.srcIn,
+                    shaderCallback: (bounds) => LinearGradient(
+                      colors: [AppColors.cyan, AppColors.jade],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ).createShader(bounds),
+                    child: Text(
+                      "Where Fantasy\nMeets Reality.",
+                      style: Theme.of(context).textTheme.displayLarge?.copyWith(
+                            fontSize: ResponsiveLayout.isMobile(context) ? 48 : 72,
+                            height: 1.1,
+                            fontWeight: FontWeight.w900,
+                          ),
+                    ),
                   ),
                   const SizedBox(height: 24),
                   const Text(
@@ -144,6 +147,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                           "Pioneering feature services and advanced platforms. Exploring the edge of modern UI engineering with Flutter and rich ambient web experiences.",
                           style: TextStyle(fontSize: 16, color: AppColors.textSecondary, height: 1.5),
                         ),
+                        
                       ],
                     ),
                   ),

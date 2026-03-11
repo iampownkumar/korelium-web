@@ -175,7 +175,7 @@ class _BlogListScreenState extends State<BlogListScreen> {
               ),
               const SizedBox(height: 48),
               MarkdownBody(
-                data: post.content.replaceAll(r'\n', '\n'),
+                data: post.content.replaceAll(r'\n', '\n').replaceAll(r'\\n', '\n'),
                 styleSheet: MarkdownStyleSheet(
                   h1: const TextStyle(color: AppColors.textPrimary, fontSize: 36, fontWeight: FontWeight.bold),
                   h2: const TextStyle(color: AppColors.cyan, fontSize: 24, fontWeight: FontWeight.bold),
