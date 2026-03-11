@@ -17,6 +17,7 @@ class ScaffoldWithNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
+      endDrawer: _buildMobileDrawer(context),
       body: Stack(
         children: [
           // Basic subtle gradient background
@@ -85,11 +86,15 @@ class ScaffoldWithNavBar extends StatelessWidget {
                         ),
                       // Hamburger Menu (Mobile)
                       if (ResponsiveLayout.isMobile(context))
-                        IconButton(
-                          icon: const Icon(Icons.menu, color: AppColors.textPrimary),
-                          onPressed: () {
-                            // Mobile menu implementation
-                          },
+                        Builder(
+                          builder: (context) {
+                            return IconButton(
+                              icon: const Icon(Icons.menu, color: AppColors.textPrimary),
+                              onPressed: () {
+                                Scaffold.of(context).openEndDrawer();
+                              },
+                            );
+                          }
                         ),
                     ],
                   ),
@@ -99,6 +104,60 @@ class ScaffoldWithNavBar extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+  Widget _buildMobileDrawer(BuildContext context) {
+    return Drawer(
+      backgroundColor: AppColors.background.withOpacity(0.95),
+      elevation: 0,
+      child: SafeArea(
+        child: Column(
+          children: [
+            const SizedBox(height: 40),
+            Text(
+              'NAVIGATION',
+              style: TextStyle(
+                color: AppColors.cyan.withOpacity(0.5),
+                letterSpacing: 2,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 40),
+            _MobileDrawerItem(title: 'Home', path: '/'),
+            _MobileDrawerItem(title: 'About', path: '/about'),
+            _MobileDrawerItem(title: 'Blog', path: '/blog'),
+            _MobileDrawerItem(title: 'Portfolio', path: '/portfolio'),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _MobileDrawerItem extends StatelessWidget {
+  final String title;
+  final String path;
+
+  const _MobileDrawerItem({required this.title, required this.path});
+
+  @override
+  Widget build(BuildContext context) {
+    final bool isActive = GoRouterState.of(context).uri.toString() == path;
+    
+    return ListTile(
+      contentPadding: const EdgeInsets.symmetric(horizontal: 40, vertical: 8),
+      title: Text(
+        title,
+        style: TextStyle(
+          fontSize: 24,
+          fontWeight: FontWeight.w600,
+          color: isActive ? AppColors.cyan : AppColors.textPrimary,
+        ),
+      ),
+      onTap: () {
+        Navigator.pop(context); // Close the drawer
+        context.go(path); // Navigate to new screen
+      },
     );
   }
 }
