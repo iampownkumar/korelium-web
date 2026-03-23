@@ -16,6 +16,13 @@ const List<ProjectModel> portfolioProjects = [
   //   isFeatured: true,
   // ),
   ProjectModel(
+    title: 'Kora Expense Tracker',
+    description: 'A comprehensive personal finance tracking application built with Flutter. Clean architecture, complex state management, and an intuitive UI, fully prepared for Play Store publication.',
+    tag: 'Flutter / Production / Open Source',
+    githubUrl: 'https://github.com/iampownkumar/kora_expense_tracker',
+    isFeatured: true,
+  ),
+  ProjectModel(
     title: 'Kora Hyprland Environment',
     description: 'A highly customized, aesthetic, and fully functional tiling window manager configuration for Arch Linux using Hyprland. Features custom waybar integrations, fluid animations, and a cohesive personalized theme.',
     tag: 'Unix Ricing / Linux / Wayland',
@@ -40,10 +47,5 @@ const List<ProjectModel> portfolioProjects = [
     tag: 'Node.js / Express / Backend',
     githubUrl: 'https://github.com/iampownkumar/korelium.org',
   ),
-  ProjectModel(
-    title: 'Concept Explorations (FinValut & Kora)',
-    description: 'Ambitious explorations into complex state management and personal finance tracking using Flutter. These experimental builds served as deep-dives into mobile app architecture and feature ideation.',
-    tag: 'Flutter / Architecture Study',
-    githubUrl: 'https://github.com/iampownkumar/finvalut',
-  ),
+
 ];

@@ -122,35 +122,185 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       ),
                     ],
                   ),
+                  
 
                   const SizedBox(height: 80),
 
                   // Currently Doing Section
                   _SectionHeader(title: "Currently Doing"),
+
+                  const SizedBox(height: 16),
+                  _buildGlassCard(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Wrap(
+                          spacing: 12,
+                          runSpacing: 8,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: [
+                            const Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(Icons.account_balance_wallet, color: AppColors.jade, size: 24),
+                                SizedBox(width: 12),
+                                Text(
+                                  "Kora Expense Tracker",
+                                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.textPrimary),
+                                ),
+                              ],
+                            ),
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                              decoration: BoxDecoration(
+                                color: AppColors.cyan.withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(color: AppColors.cyan.withOpacity(0.3)),
+                              ),
+                              child: const Text(
+                                "Play Store Internal Testing",
+                                style: TextStyle(color: AppColors.cyan, fontSize: 12, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 12),
+                        const Text(
+                          "A comprehensive open-source finance tracking solution built entirely with Flutter. Currently undergoing internal testing and preparing for Play Store publication.",
+                          style: TextStyle(fontSize: 16, color: AppColors.textSecondary, height: 1.5),
+                        ),
+                        const SizedBox(height: 16),
+                        _SocialIcon(
+                          icon: Icons.code,
+                          label: 'View Repository',
+                          onTap: () => _launchUrl('https://github.com/iampownkumar/kora_expense_tracker'),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  _buildGlassCard(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Wrap(
+                          spacing: 12,
+                          runSpacing: 8,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: [
+                            const Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(Icons.language, color: AppColors.jade, size: 24),
+                                SizedBox(width: 12),
+                                Text(
+                                  "Building korelium.org",
+                                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.textPrimary),
+                                ),
+                              ],
+                            ),
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                              decoration: BoxDecoration(
+                                color: AppColors.cyan.withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(color: AppColors.cyan.withOpacity(0.3)),
+                              ),
+                              child: const Text(
+                                "Flutter",
+                                style: TextStyle(color: AppColors.cyan, fontSize: 12, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 12),
+                        const Text(
+                          "Pioneering feature services and advanced platforms. Exploring the edge of modern web and UI engineering with pure Flutter code.",
+                          style: TextStyle(fontSize: 16, color: AppColors.textSecondary, height: 1.5),
+                        ),
+                        const SizedBox(height: 16),
+                        _SocialIcon(
+                          icon: Icons.code,
+                          label: 'View Repository',
+                          onTap: () => _launchUrl('https://github.com/iampownkumar/korelium-web'),
+                        ),
+                      ],
+                    ),
+                  ),
                   const SizedBox(height: 16),
                   _buildGlassCard(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Row(
+                          mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(Icons.rocket_launch, color: AppColors.jade, size: 24),
+                            Icon(Icons.terminal, color: AppColors.jade, size: 24),
                             SizedBox(width: 12),
                             Text(
-                              "Building Korelium",
+                              "Learning DevOps & SRE",
                               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.textPrimary),
                             ),
                           ],
                         ),
                         const SizedBox(height: 12),
                         const Text(
-                          "Pioneering feature services and advanced platforms. Exploring the edge of modern UI engineering with Flutter and rich ambient web experiences.",
+                          "Deep diving into Continuous Integration, deployment strategies, and Site Reliability Engineering to ensure highly available, fault-tolerant infrastructure.",
                           style: TextStyle(fontSize: 16, color: AppColors.textSecondary, height: 1.5),
                         ),
-                        
                       ],
                     ),
                   ),
+                  const SizedBox(height: 16),
+                  _buildGlassCard(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Wrap(
+                          spacing: 12,
+                          runSpacing: 8,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: [
+                            const Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(Icons.work_outline, color: AppColors.jade, size: 24),
+                                SizedBox(width: 12),
+                                Text(
+                                  "Actively Looking for a Job",
+                                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.textPrimary),
+                                ),
+                              ],
+                            ),
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                              decoration: BoxDecoration(
+                                color: AppColors.jade.withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(color: AppColors.jade.withOpacity(0.3)),
+                              ),
+                              child: const Text(
+                                "Hire Me",
+                                style: TextStyle(color: AppColors.jade, fontSize: 12, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 12),
+                        const Text(
+                          "Seeking new engineering opportunities where I can leverage my expertise in frontend architecture, backend services, and modern UI engineering to build impactful applications.",
+                          style: TextStyle(fontSize: 16, color: AppColors.textSecondary, height: 1.5),
+                        ),
+                        const SizedBox(height: 16),
+                        _SocialIcon(
+                          icon: Icons.description,
+                          label: 'View LinkedIn',
+                          onTap: () => _launchUrl('https://www.linkedin.com/in/iampownkumar/'),
+                        ),
+                      ],
+                    ),
+                  ),
+                  
                 ],
               ),
             ),
